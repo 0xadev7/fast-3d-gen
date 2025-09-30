@@ -5,7 +5,7 @@ import torch
 import numpy as np
 from PIL import Image
 from torchvision import transforms
-from aesthetic_predictor.inference import AestheticPredictor
+from aesthetics_predictor import AestheticsPredictorV1
 
 class SelfValidator:
     def __init__(self, clip_model: str = "openai/clip-vit-base-patch32", min_clip_score: float = 0.24, min_aesthetic: float = 4.5, device="cuda"):
@@ -15,7 +15,7 @@ class SelfValidator:
         self.clip_model.eval()
         self.min_clip = min_clip_score
         self.min_aes = min_aesthetic
-        self.aesthetic = AestheticPredictor(device=device)
+        self.aesthetic = AestheticsPredictorV1(device=device)
 
     @torch.inference_mode()
     def score_clip(self, prompt: str, images: List[Image.Image]) -> float:

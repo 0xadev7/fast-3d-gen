@@ -27,7 +27,7 @@ numpy>=1.26.4
 
 # Validation
 clip-anytorch>=2.6.0
-aesthetic-predictor>=0.1.2
+simple-aesthetics-predictor
 
 # Utils
 loguru>=0.7.2
