@@ -3,8 +3,7 @@ from diffusers import FluxPipeline
 from huggingface_hub import snapshot_download
 
 T2I_MODEL = os.environ.get("T2I_MODEL", "black-forest-labs/FLUX.1-schnell")
-# prefer a Transformers-native model here:
-BG_MODEL  = os.environ.get("BG_MODEL", "briaai/RMBG-1.4")
+BG_MODEL  = os.environ.get("BG_MODEL", "mateenahmed/isnet-background-remover")
 TRELLIS_MODEL = os.environ.get("TRELLIS_IMAGE_MODEL", "JeffreyXiang/TRELLIS-image-large")
 
 print(f"Warmdownloading: {T2I_MODEL}, {BG_MODEL}, {TRELLIS_MODEL}")
