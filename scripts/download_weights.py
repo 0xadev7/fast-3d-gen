@@ -15,7 +15,7 @@ print(f"Warmdownloading: {T2I_MODEL}, {BG_MODEL}, {TRELLIS_MODEL}")
 
 # T2I
 try:
-    pipe = FluxPipeline.from_pretrained(T2I_MODEL, torch_dtype=torch.float16, variant="fp16")
+    pipe = FluxPipeline.from_pretrained(T2I_MODEL, torch_dtype=torch.float16)
     del pipe
     print("✓ FLUX downloaded")
 except Exception as e:
@@ -24,7 +24,7 @@ except Exception as e:
 # Background model (weights via transformers)
 try:
     from transformers import AutoModelForImageSegmentation
-    _ = AutoModelForImageSegmentation.from_pretrained(BG_MODEL)
+    _ = AutoModelForImageSegmentation.from_pretrained(BG_MODEL, trust_remote_code=True)
     print("✓ ISNet downloaded")
 except Exception as e:
     print("! ISNet download skipped/error:", e)
