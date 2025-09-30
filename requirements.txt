@@ -1,0 +1,36 @@
+
+# Core
+torch>=2.3.0
+torchvision>=0.18.0
+accelerate>=0.30.0
+safetensors>=0.4.3
+xformers>=0.0.28.post2
+
+# Server
+fastapi>=0.114.2
+uvicorn[standard]>=0.30.6
+pydantic>=2.8.2
+python-multipart>=0.0.9
+
+# T2I
+diffusers>=0.30.0
+transformers>=4.43.4
+huggingface-hub>=0.24.6
+
+# Background removal (ISNet via transformers)
+scikit-image>=0.24.0
+Pillow>=10.4.0
+
+# 3D
+trellis-3d>=0.1.0
+imageio[ffmpeg]>=2.35.1
+numpy>=1.26.4
+
+# Validation
+clip-anytorch>=2.6.0
+aesthetic-predictor>=0.1.2
+
+# Utils
+loguru>=0.7.2
+tyro>=0.8.6
+psutil>=6.0.0

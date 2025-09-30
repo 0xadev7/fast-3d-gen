@@ -1,0 +1,39 @@
+
+t2i:
+  model_id: "black-forest-labs/FLUX.1-schnell"
+  steps: 3               # 1-4 steps are typical for schnell
+  guidance: 0.0          # zero CFG for distilled speed models
+  height: 768            # 1024 may OOM for small GPUs
+  width: 768
+  seed: null
+
+background:
+  # Use ISNet (MIT) via transformers
+  model_id: "mateenahmed/isnet-background-remover"
+  input_size: 1024
+  threshold: 0.05        # mask threshold
+
+trellis:
+  model_id: "JeffreyXiang/TRELLIS-image-large"  # falls back to '-base' if OOM
+  steps_sparse: 8         # speed/quality
+  steps_slat: 8
+  use_flash_attn: true
+  small_model: false
+
+validation:
+  clip_model: "openai/clip-vit-base-patch32"   # faster than ViT-L/14
+  min_clip_score: 0.24
+  min_aesthetic: 4.5
+  max_retries: 1
+
+render:
+  turntable_seconds: 5
+  fps: 24
+  yaw_degrees: 360
+  elevation_degrees: 15
+
+server:
+  host: "0.0.0.0"
+  port: 8093
+  cuda_device: 0
+  timeout_secs: 30
