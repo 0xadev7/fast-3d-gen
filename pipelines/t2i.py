@@ -18,7 +18,7 @@ class T2IPipeline:
 
     def load(self):
         if self.pipe is None:
-            self.pipe = FluxPipeline.from_pretrained(self.model_id, torch_dtype=torch.float16, variant="fp16")
+            self.pipe = FluxPipeline.from_pretrained(self.model_id, torch_dtype=torch.float16)
             self.pipe.to(self.device)
             self.pipe.vae.enable_tiling()  # lower VRAM spikes
 
