@@ -3,7 +3,7 @@ torch==2.4.1
 torchvision==0.19.1
 accelerate>=0.30.0
 safetensors>=0.4.3
-xformers==0.0.27.post2
+xformers>=0.0.27.post2
 
 # Server
 fastapi>=0.114.2
