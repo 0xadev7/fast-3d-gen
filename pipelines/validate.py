@@ -15,7 +15,8 @@ class SelfValidator:
         self.clip_model.eval()
         self.min_clip = min_clip_score
         self.min_aes = min_aesthetic
-        self.aesthetic = AestheticsPredictorV1(device=device)
+        self.aesthetic = AestheticsPredictorV1.from_pretrained("shunk031/aesthetics-predictor-v1-vit-large-patch14")
+
 
     @torch.inference_mode()
     def score_clip(self, prompt: str, images: List[Image.Image]) -> float:
