@@ -1,35 +1,39 @@
-
-import os, json, sys, torch
-
-# Minimal warm downloads to avoid serverless cold starts.
-# Respect HF cache and do not force redownloads.
+import os, torch
 from diffusers import FluxPipeline
-from transformers import AutoModelForImageSegmentation, AutoProcessor
 from huggingface_hub import snapshot_download
 
 T2I_MODEL = os.environ.get("T2I_MODEL", "black-forest-labs/FLUX.1-schnell")
-BG_MODEL  = os.environ.get("BG_MODEL", "mateenahmed/isnet-background-remover")
+# prefer a Transformers-native model here:
+BG_MODEL  = os.environ.get("BG_MODEL", "briaai/RMBG-1.4")
 TRELLIS_MODEL = os.environ.get("TRELLIS_IMAGE_MODEL", "JeffreyXiang/TRELLIS-image-large")
 
 print(f"Warmdownloading: {T2I_MODEL}, {BG_MODEL}, {TRELLIS_MODEL}")
 
-# T2I
+# T2I (Flux)
 try:
-    pipe = FluxPipeline.from_pretrained(T2I_MODEL, torch_dtype=torch.float16)
-    del pipe
+    _ = FluxPipeline.from_pretrained(T2I_MODEL, torch_dtype=torch.float16)
     print("✓ FLUX downloaded")
 except Exception as e:
     print("! FLUX download skipped/error:", e)
 
-# Background model (weights via transformers)
+# Background remover
 try:
-    from transformers import AutoModelForImageSegmentation
-    _ = AutoModelForImageSegmentation.from_pretrained(BG_MODEL, trust_remote_code=True)
-    print("✓ ISNet downloaded")
-except Exception as e:
-    print("! ISNet download skipped/error:", e)
+    from transformers import AutoImageProcessor, AutoModelForImageSegmentation
 
-# TRELLIS (relies on HF snapshot)
+    try:
+        # First, try standard load (works for RMBG)
+        _ = AutoImageProcessor.from_pretrained(BG_MODEL)
+        _ = AutoModelForImageSegmentation.from_pretrained(BG_MODEL)
+        print("✓ BG model downloaded")
+    except Exception:
+        # Fallback: allow custom modeling code (if repo provides it)
+        _ = AutoImageProcessor.from_pretrained(BG_MODEL, trust_remote_code=True)
+        _ = AutoModelForImageSegmentation.from_pretrained(BG_MODEL, trust_remote_code=True)
+        print("✓ BG model (remote code) downloaded")
+except Exception as e:
+    print("! BG model download skipped/error:", e)
+
+# TRELLIS snapshot
 try:
     snapshot_download(repo_id=TRELLIS_MODEL, allow_patterns=["*"])
     print("✓ TRELLIS weights cached")
