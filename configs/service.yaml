@@ -17,7 +17,6 @@ trellis:
   model_id: "JeffreyXiang/TRELLIS-image-large"  # falls back to '-base' if OOM
   steps_sparse: 8         # speed/quality
   steps_slat: 8
-  use_flash_attn: true
   small_model: false
 
 validation:
