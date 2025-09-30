@@ -8,7 +8,7 @@ from torchvision import transforms
 from aesthetics_predictor import AestheticsPredictorV1
 
 class SelfValidator:
-    def __init__(self, clip_model: str = "openai/clip-vit-base-patch32", min_clip_score: float = 0.24, min_aesthetic: float = 4.5, device="cuda"):
+    def __init__(self, clip_model: str = "ViT-B/32", min_clip_score: float = 0.24, min_aesthetic: float = 4.5, device="cuda"):
         import clip  # from clip-anytorch
         self.device = device
         self.clip_model, self.clip_preproc = clip.load(clip_model.split("/")[-1], device=device, download_root=None)
