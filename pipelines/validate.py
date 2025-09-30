@@ -16,6 +16,7 @@ class SelfValidator:
         self.min_clip = min_clip_score
         self.min_aes = min_aesthetic
         self.aesthetic = AestheticsPredictorV1.from_pretrained("shunk031/aesthetics-predictor-v1-vit-large-patch14")
+        self.aesthetic = self.aesthetic.to(device)
 
 
     @torch.inference_mode()
