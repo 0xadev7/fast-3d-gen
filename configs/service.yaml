@@ -23,7 +23,6 @@ validation:
   clip_model: "openai/clip-vit-base-patch32"   # faster than ViT-L/14
   min_clip_score: 0.24
   min_aesthetic: 4.5
-  max_retries: 1
 
 render:
   turntable_seconds: 5
